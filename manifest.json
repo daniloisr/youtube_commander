@@ -1,0 +1,14 @@
+{
+    "name": "Youtube Commander",
+    "version": "0.1",
+    "description": "Commander for youtub out the youtube tab",
+    "permissions": [
+        "http://infotux.blogspot.com",
+        "http://blog.nucleoassistir.com"
+    ],
+    "browser_action": {
+      "default_icon": "youtube_play.png",
+      "default_title": "Youtube Commander",
+      "popup": "popup.html"
+    }
+}
