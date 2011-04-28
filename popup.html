@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Youtube Commands</title>
-		<script type="text/javascript" language="javascript" charset="utf-8">
+		<script>
+			var youtube_tab;
+			chrome.tabs.getAllInWindow(chrome.windows.getCurrent(function(current_window){}),
+			function(tabs){
+				for(tab in tabs){
+					if(tabs[tab].url.match(/youtube\.com\/watch\?v=[^&]+/i)){
+						youtube_tab = tabs[tab];
+						console.dir(youtube_tab);
+						break;
+					}
+				}
+			});
+			function execute(object){
+				alert(object.id);
+			}
 		</script>
 	</head>
 	<body>
-
 		<div id="main">
 			<div id="play_pause">
-				<a id="play_pause" href="">Play</a>
+				<a id="play_pause" href="" onclick="execute(this)">Play</a>
 			</div>
-
 			<div id="stop">
-				<a id="stop" href="">Stop</a>
+				<a id="stop" href="" onclick="execute(this)">Stop</a>
 			</div>
-
 			<div id="previous">
-				<a id="previous" href="">Previous</a>
+				<a id="previous" href="" onclick="execute(this)">Previous</a>
 			</div>
-
 			<div id="next">
-				<a id="next" href="">Next</a>
+				<a id="next" href="" onclick="execute(this)">Next</a>
 			</div>
-
 			<div id="volume">
 				<label for="volume_range">Volume</label>
-				<input name="volume_range" id="volume_range" type="range" min="0" max="100" value="100"/>
-				<a id="mute_unmute" href="">Mute</a>
+
+				<input name="volume_range" id="volume_range"
+				type="range" min="0" max="100" value="100"
+				onchange="execute(this)"/>
+
+				<a id="mute_unmute" href="" onclick="execute(this)">Mute</a>
 			</div>
-
 		</div>
-
 	</body>
 </html>
