@@ -1,12 +1,10 @@
-chrome.extension.onRequest.addListener(
-        function(request, sender, sendResponse) {
-            console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-            if (request.command == "play")
-    play();
-            else
-        });
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    console.dir(request);
+    if (request.command == "play_pause") {
+        play();
+        sendResponse({'result': 'ok'});
+    }
+});
 
 var player = null;
 var playerType = null;

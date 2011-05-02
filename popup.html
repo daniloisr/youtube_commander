@@ -7,14 +7,16 @@
 			function(tabs){
 				for(tab in tabs){
 					if(tabs[tab].url.match(/youtube\.com\/watch\?v=[^&]+/i)){
-						youtube_tab = tabs[tab];
-						console.dir(youtube_tab);
+                        youtube_tab = tabs[tab];
+                        alert(youtube_tab.id);
 						break;
 					}
 				}
 			});
 			function execute(object){
-				alert(object.id);
+				chrome.tabs.sendRequest(youtube_tab.id, {'command': object.name}, function(data){
+					console.dir(data);	
+				});
 			}
 		</script>
 	</head>

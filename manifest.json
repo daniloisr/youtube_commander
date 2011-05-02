@@ -10,7 +10,7 @@
         "popup": "popup.html"
     },
     "content_scripts": [{
-        "matches": ["http://*.youtube.com/*"],
+        "matches": ["http://*.youtube.com/watch*"],
         "js": ["commander.js"]
     }]
 }
