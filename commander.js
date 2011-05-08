@@ -1,94 +1,87 @@
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    console.dir(request);
-    if (request.command == "play_pause") {
-        play();
-        sendResponse({'result': 'ok'});
-    }
+chrome.extension.onRequest.addListener( function(request, sender, sendResponse) {
+    player = new Player();
+    console.dir(player.getStats());
+    eval("player."+request.command+"("+request.params+")");
+    sendResponse(player.getStats());
 });
 
-var player = null;
-var playerType = null;
+Player = function(){
+    this.player = null;
+    this.type = null;
 
-if(document.getElementById("movie_player")) {
-    player = document.getElementById("movie_player");
-    playerType = "flash";
-} else if(document.getElementsByClassName("video-stream")[0]) {
-    player = document.getElementsByClassName("video-stream")[0];
-    playerType = "html5";
-}
-
-function pause() {
-    if(playerType == "flash") {
-        if(player.getPlayerState() == 1) {
-            player.pauseVideo();
-        } else if(player.getPlayerState() == 2) {
-            player.playVideo();
-        }
-    } else if(playerType == "html5") {
-        if(player.paused) {
-            player.play();
-        } else {
-            player.pause();
-        }
+    if(document.getElementById("movie_player")) {
+        this.player = document.getElementById("movie_player");
+        this.type = "flash";
+    } else if(document.getElementsByClassName("video-stream")[0]) {
+        this.player = document.getElementsByClassName("video-stream")[0];
+        this.type = "html5";
     }
-}
 
-function ffwd() {
-    if(playerType == "flash") {
-        player.seekTo(player.getCurrentTime() + 5 < player.getDuration() ? player.getCurrentTime() + 5 : player.getDuration(), true);
-    } else if(playerType == "html5") {
-        if(player.currentTime + 5 < player.duration) {
-            player.currentTime += 5;
-        } else {
-            player.currentTime = player.duration;
+    this.play_pause = function() {
+        if(this.type == "flash") {
+            if(this.player.getPlayerState() == 1) {
+                this.player.pauseVideo();
+            } else if(this.player.getPlayerState() == 2) {
+                this.player.playVideo();
+            }
+        } else if(this.type == "html5") {
+            if(this.player.paused) {
+                this.player.play();
+            } else {
+                this.player.pause();
+            }
         }
+        return this;
     }
-}
 
-function rewind() {
-    if(playerType == "flash") {
-        player.seekTo(player.getCurrentTime() - 5 > 0 ? player.getCurrentTime() - 5 : 0, true);
-    } else if(playerType == "html5") {
-        if(player.currentTime - 5 > 0) {
-            player.currentTime -= 5;
-        } else {
-            player.currentTime = 0;
+    this.volume = function(value) {
+        if(this.type == "flash") {
+            this.player.setVolume(value);
+        } else if(this.type == "html5") {
+            this.player.volume = value;
         }
-    }
-}
 
-function decVolume() {
-    if(playerType == "flash") {
-        player.setVolume(player.getVolume() - 10 > 0 ? player.getVolume() - 10 : 0);
-    } else if(playerType == "html5") {
-        if(player.volume - 0.1 > 0) {
-            player.volume -= 0.1;
-        } else {
-            player.volume = 0;
+        return this;
+    }
+
+    this.mute = function() {
+        if(this.type == "flash") {
+            if(this.player.isMuted()) {
+                this.player.unMute();
+            } else {
+                this.player.mute()
+            } 
+        } else if(this.type == "html5") {
+            this.player.muted = !player.muted;
         }
+        return this;
     }
-}
 
-function incVolume() {
-    if(playerType == "flash") {
-        player.setVolume(player.getVolume() + 10 < 100 ? player.getVolume() + 10 : 100);
-    } else if(playerType == "html5") {
-        if(player.volume + 0.1 < 1) {
-            player.volume += 0.1;
-        } else {
-            player.volume = 1;
+    this.getStats = function(){
+        var stats = new Object();
+        if(this.type == "flash") {
+            stats.mute = this.player.isMuted();
+        } else if(this.type == "html5") {
+            stats.mute = this.player.muted;
         }
-    }
-}
 
-function mute() {
-    if(playerType == "flash") {
-        if(player.isMuted()) {
-            player.unMute();
-        } else {
-            player.mute()
-        } 
-    } else if(playerType == "html5") {
-        player.muted = !player.muted;
+        if(this.type == "flash") {
+            stats.volume = this.player.getVolume();
+        } else if(this.type == "html5") {
+            stats.volume = this.player.volume;
+        }
+
+        if(this.type == "flash") {
+            if(this.player.getPlayerState() == 1) {
+                stats.play = true;
+            } else if(this.player.getPlayerState() == 2) {
+                stats.play = false;
+            }
+        } else if(this.type == "html5") {
+            stats.play = this.player.paused;
+        }
+        return stats;
     }
+
+    return this;
 }
