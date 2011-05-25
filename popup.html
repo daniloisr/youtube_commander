@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	  <script type="text/javascript" src="jquery-ui-1.8.13.custom/js/jquery-1.5.1.min.js"></script>
+	  <script type="text/javascript" src="jquery-ui-1.8.13.custom/js/jquery-ui-1.8.13.custom.min.js"></script>
+	  <link type="text/css" href="jquery-ui-1.8.13.custom/css/dot-luv/jquery-ui-1.8.13.custom.css" rel="Stylesheet" />
 		<style type="text/css" media="screen">
 			*{
 				margin: 0;
@@ -8,16 +11,17 @@
 			}
 			body{
 				width: 180px;
-				font-family: Verdana;
+				font-family: Verdana,Geneva,Kalimati,sans-serif;
 				font-size: 12px;
-				background: #ccc;
+				background: #444;
+				padding: 0 10px;
 			}
 			a{
-				color: #222;
+				color: #ccc;
 				text-decoration: none;
 			}
 			a:hover {
-				color: #888;
+				color: #eee;
 				text-decoration: none;
 			}
 			#links{
@@ -27,6 +31,10 @@
 			}
 			#play_pause{
 				float: left;
+				text-indent: -9999px;
+				background: url('imgs/buttons.png');
+				width: 35px;
+				height: 35px;
 			}
 			#mute{
 				float: right;
@@ -34,8 +42,10 @@
 			label{
 				font-weight: bold;
 				margin-left: 5px;
+				color: #ccc;
 			}
 			#volume_box{
+			  clear: both;
 				padding: 2px;
 				height: 22px;
 			}
@@ -43,7 +53,7 @@
 				width: 70%;
 			}
 			#volume_text{
-				color: #111;
+				color: #ccc;
 				float: right;
 				vertical-align: top;
 				height: 22px;
@@ -61,23 +71,22 @@
 					}
 				}
 				checkLabels();
-				setVolumeText(document.getElementById('volume'));
 			});
 
 			function checkLabels(player){
 
 				var volume_text = document.getElementById('volume_text');
-				var volume = document.getElementById('volume');
+				var volume = $('#volume');
 				var play_pause = document.getElementById('play_pause');
 				var mute = document.getElementById('mute');
-
-				volume_text.innerHTML = volume.value + ' %';
+				
+				volume_text.innerHTML = volume.slider('value') + ' %';
 
 				chrome.tabs.sendRequest(youtube_tab.id, {'command': 'getStats', 'params': ''},
 				function(player){
-					play_pause.innerHTML = player.play ? 'Pause' : 'Play';
+					play_pause.style.backgroundPosition = player.play ? '0 35px' : '0 0';
 					mute.innerHTML = player.mute ? 'Unmute' : 'Mute';
-					volume.value = player.volume;
+					volume.slider('value',player.volume);
 					volume_text.innerHTML = player.mute ? '0 %' : player.volume + ' %';
 				});
 			}
@@ -88,10 +97,21 @@
 				});
 				checkLabels();
 			}
+			
+			$(document).ready(function(){
+			
+			  $('#volume').slider({
+			    range: 'min',
+			    min: 0,
+			    stop: function(event, ui){
+			      execute({id: 'volume', value: $('#volume').slider('value')});
+		      }
+			  });
+			});
 
 		</script>
 	</head>
-	<body onload="load_names()">
+	<body>
 		<div id="main">
 			<div id="links">
 				<a id="play_pause" href="#" onclick="execute(this)">Play/Pause</a>
@@ -102,8 +122,7 @@
 			<label for="volume_label">Volume</label>
 
 			<div id="volume_box">
-				<input id="volume" type="range" min="0" max="100"
-				value="100" step="5" onchange="execute(this)"/>
+				<div id="volume"></div>
 
 				<span id="volume_text"></span>
 			</div>
