@@ -38,7 +38,7 @@ Player = function(){
         if(this.type == "flash") {
             this.player.setVolume(value);
         } else if(this.type == "html5") {
-            this.player.volume = value;
+            this.player.volume = Math.round(value/100);
         }
 
         return this;
@@ -59,6 +59,7 @@ Player = function(){
 
     this.getStats = function(){
         var stats = new Object();
+
         if(this.type == "flash") {
             stats.mute = this.player.isMuted();
         } else if(this.type == "html5") {
@@ -78,8 +79,10 @@ Player = function(){
                 stats.play = false;
             }
         } else if(this.type == "html5") {
-            stats.play = this.player.paused;
+            stats.play = !this.player.paused;
         }
+        stats.type = this.type;
+        stats.title = document.getElementById("eow-title").title;
         return stats;
     }
 
