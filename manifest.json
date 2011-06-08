@@ -1,6 +1,6 @@
 {
     "name": "Youtube Commander",
-    "version": "0.1",
+    "version": "0.1.1",
     "description": "Commander for youtub out the youtube tab",
     "homepage_url": "https://github.com/kassio/youtube_commander",
     "permissions": [ "tabs", "http://*.youtube.com/watch*" ],
