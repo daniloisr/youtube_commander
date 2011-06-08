@@ -4,8 +4,13 @@
     "description": "Commander for youtub out the youtube tab",
     "homepage_url": "https://github.com/kassio/youtube_commander",
     "permissions": [ "tabs", "http://*.youtube.com/watch*" ],
+    "icons": {
+			"16": "images/youtube_play_16.png",
+			"48": "images/youtube_play_48.png",
+			"128": "images/youtube_play_128.png"
+    },
     "browser_action": {
-        "default_icon": "youtube_play.png",
+        "default_icon": "images/play.png",
         "default_title": "Youtube Commander",
         "popup": "popup.html"
     },

@@ -1,144 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script type="text/javascript" src="jquery-ui-1.8.13.custom/js/jquery-1.5.1.min.js"></script>
-		<script type="text/javascript" src="jquery-ui-1.8.13.custom/js/jquery-ui-1.8.13.custom.min.js"></script>
-		<link type="text/css" href="jquery-ui-1.8.13.custom/css/dot-luv/jquery-ui-1.8.13.custom.css" rel="Stylesheet" />
-		<style type="text/css" media="screen">
-			*{
-				margin: 0;
-				padding: 0;
-			}
-			body{
-				width: 200px;
-				font-family: Verdana,Geneva,Kalimati,sans-serif;
-				font-size: 12px;
-				background: #444;
-				padding: 0 10px 5px;
-				color: #ccc;
-			}
-			a{
-				color: #ccc;
-				text-decoration: none;
-			}
-			a:hover {
-				color: #eee;
-				text-decoration: none;
-			}
-			#main{
-				margin: 5px;
-			}
-			#links_box{
-				width: 100%;
-			}
-			#links{
-				padding-bottom: 12px;
-				float: right;
-			}
-			#title{
-				float: left;
-				font-weight: bold;
-				width: 80%;
-			}
-			#play_pause{
-				float: left;
-				text-indent: -9999px;
-				background: url('imgs/buttons.png');
-				width: 35px;
-				height: 35px;
-			}
-			#mute{
-				float: right;
-			}
-			label{
-				font-weight: bold;
-				margin: 0 5px 10px;
-				text-align: center;
-				clear: both;
-			}
-			#volume_box{
-				clear: both;
-			}
-			#volume_commands{
-				margin: 5px;
-			}
-			#volume{
-				clear: both;
-				width: 70%;
-				float: left;
-			}
-			#volume_text{
-				color: #ccc;
-				float: right;
-				vertical-align: top;
-				height: 22px;
-				margin-left: 5px;
-			}
-		</style>
-		<script>
-			var youtube_tab;
-			chrome.windows.getAll(null, function(win){
-				for(index in win){
-					chrome.tabs.getAllInWindow(win[index].id,
-					function(tabs){
-						for(tab in tabs){
-							if(tabs[tab].url.match(/youtube\.com\/watch\?v=[^&]+/i)){
-								youtube_tab = tabs[tab];
-								break;
-							}
-						}
-						checkLabels();
-					});
-				}
-			});
-
-			function checkLabels(player){
-
-				var volume_text = document.getElementById('volume_text');
-				var volume = $('#volume');
-				var play_pause = document.getElementById('play_pause');
-				var mute = document.getElementById('mute');
-				var title = document.getElementById('title');
-
-				volume_text.innerHTML = volume.slider('value') + ' %';
-
-				chrome.tabs.sendRequest(youtube_tab.id, {'command': 'getStats', 'params': ''},
-				function(player){
-					play_pause.style.backgroundPosition = player.play ? '0 35px' : '0 0';
-					mute.innerHTML = player.mute ? 'Unmute' : 'Mute';
-					if (player.type == 'flash') {
-						volume_text.innerHTML = player.mute ? '0 %' : player.volume + ' %';
-						volume.slider('value',player.volume);
-					} else {
-						volume_text.innerHTML = player.mute ? '0 %' : Math.round(parseFloat(player.volume)*100) + ' %';
-						volume.slider('value',parseFloat(player.volume)*100);
-					}
-
-					title.innerHTML = player.title;
-				});
-			}
-
-			function execute(object){
-				chrome.tabs.sendRequest(youtube_tab.id, {'command': object.id, 'params': object.value}, function(data){
-					console.dir(data);
-				});
-				checkLabels();
-			}
-
-			$(document).ready(function(){
-				$('#volume').slider({
-					range: 'min',
-					min: 0,
-					stop: function(event, ui){
-						execute({id: 'volume', value: $('#volume').slider('value')});
-					}
-				});
-			});
-
-		</script>
+		<link type="text/css" href="css/popup.css" rel="Stylesheet" />
+		<link type="text/css" href="js/jquery-ui-1.8.13.custom/css/blitzer/jquery-ui-1.8.13.custom.css" rel="Stylesheet" />
+		<script type="text/javascript" src="js/jquery-ui-1.8.13.custom/js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.13.custom/js/jquery-ui-1.8.13.custom.min.js"></script>
+		<script type="text/javascript" src="js/popup.js"></script>
 	</head>
 	<body>
 		<div id="main">
+
 			<div id="links_box">
 				<div id="links">
 					<a id="play_pause" href="#" onclick="execute(this)">Play/Pause</a>
@@ -153,6 +24,10 @@
 					<div id="volume"></div>
 					<div id="volume_text"></div>
 				</div>
+			</div>
+
+			<div id="thumbnails_list">
+
 			</div>
 		</div>
 	</body>

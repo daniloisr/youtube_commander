@@ -11,7 +11,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="260"
-   height="260"
+   height="520"
    id="svg4200"
    version="1.1"
    inkscape:version="0.48.1 r9760"
@@ -19,7 +19,7 @@
    inkscape:export-filename="/home/kassioborges/Dropbox/Development/chrome-extensions/youtube_commander/design/youtube_play_260.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   enable-background="new">
+   style="enable-background:new">
   <defs
      id="defs4202">
     <linearGradient
@@ -131,9 +131,9 @@
        xlink:href="#linearGradient3771"
        id="radialGradient3777"
        cx="-130.52666"
-       cy="920.24443"
+       cy="920.24445"
        fx="-130.52666"
-       fy="920.24443"
+       fy="920.24445"
        r="126"
        gradientUnits="userSpaceOnUse" />
     <radialGradient
@@ -315,8 +315,8 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="715"
+     inkscape:window-width="1280"
+     inkscape:window-height="971"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1" />
@@ -328,7 +328,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -336,10 +336,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-792.36218)">
+     transform="translate(0,-532.36218)">
     <g
        id="g3996"
-       transform="translate(6.6625169,-33.312584)"
+       transform="translate(-359.77591,-279.82571)"
        inkscape:export-filename="/home/kassioborges/Dropbox/Development/chrome-extensions/youtube_commander/design/youtube_commands_35_70.png"
        inkscape:export-xdpi="12.31"
        inkscape:export-ydpi="12.31">

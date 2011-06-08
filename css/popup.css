@@ -1,0 +1,92 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	width: 300px;
+	font-family: Verdana,Geneva,Kalimati,sans-serif;
+	font-size: 12px;
+	background: #444;
+	padding: 0 10px 5px;
+	color: #eee;
+}
+a{
+	color: #eee;
+	text-decoration: none;
+}
+a:hover {
+	color: #fff;
+	text-decoration: none;
+	background: -webkit-gradient(radial, 99% 25%, 0, 99% 25%, 30, from(rgba(255, 0, 0, 0.5)), to(#444));
+}
+#main{
+	margin: 10px 15px 10px 5px;
+	overflow: auto;
+}
+#links_box{
+	width: 100%;
+}
+#links{
+	padding-bottom: 12px;
+	float: right;
+}
+#title{
+	float: left;
+	font-weight: bold;
+	width: 80%;
+}
+#play_pause{
+	float: left;
+	text-indent: -9999px;
+	background: url('../images/buttons.png');
+	width: 35px;
+	height: 35px;
+}
+#mute{
+	float: right;
+}
+label{
+	font-weight: bold;
+	margin: 0 5px 10px;
+	text-align: center;
+	clear: both;
+}
+#volume_box{
+	clear: both;
+}
+#volume_commands{
+	margin: 5px;
+}
+#volume{
+	clear: both;
+	width: 70%;
+	float: left;
+}
+#volume_text{
+	color: #ccc;
+	float: right;
+	vertical-align: top;
+	height: 22px;
+	margin-left: 5px;
+}
+#thumbnails_list{
+	margin-top: 30px;
+	padding-top: 10px;
+	border-top: 1px solid #ccc;
+	width: 100%;
+}
+figure{
+	width: 100%;
+	clear: both;
+}
+figure img{
+	float: left;
+}
+caption{
+	float: right;
+}
+
+/*Fixing jquery-ui slider theme blitzer*/
+.ui-slider .ui-slider-range{
+	border-radius: 6px;
+}
