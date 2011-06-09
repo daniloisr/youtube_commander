@@ -2,7 +2,6 @@ var YoutubeCommander = (function(){
    var yc = function(){
       var new_this = this;
       this.setYoutubeData = function(youtube_tab_id){
-         console.dir(youtube_tab_id);
          chrome.tabs.sendRequest(youtube_tab_id, {'command': 'getStatus', 'params': ''}, function(playerStatus){
             new_this.setPlayPause(playerStatus);
             new_this.setVolume(playerStatus);
