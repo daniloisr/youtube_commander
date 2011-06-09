@@ -1,7 +1,5 @@
 chrome.extension.onRequest.addListener( function(request, sender, sendResponse) {
-    console.log('chegou aqui');
     player = new Player();
-    console.dir(player.getStats());
     eval("player."+request.command+"("+request.params+")");
     sendResponse(player.getStatus());
 });
@@ -17,8 +15,6 @@ Player = function(){
         this.player = document.getElementsByClassName("video-stream")[0];
         this.type = "html5";
     }
-
-    console.dir(this.player);
 
     this.play_pause = function() {
         if(this.type == "flash") {
@@ -61,32 +57,32 @@ Player = function(){
     }
 
     this.getStatus = function(){
-        var stats = new Object();
+        var player_status = new Object();
 
         if(this.type == "flash") {
-            stats.mute = this.player.isMuted();
+            player_status.mute = this.player.isMuted();
         } else if(this.type == "html5") {
-            stats.mute = this.player.muted;
+            player_status.mute = this.player.muted;
         }
 
         if(this.type == "flash") {
-            stats.volume = this.player.getVolume();
+            player_status.volume = this.player.getVolume();
         } else if(this.type == "html5") {
-            stats.volume = this.player.volume;
+            player_status.volume = this.player.volume;
         }
 
         if(this.type == "flash") {
             if(this.player.getPlayerState() == 1) {
-                stats.play = true;
+                player_status.play = true;
             } else if(this.player.getPlayerState() == 2) {
-                stats.play = false;
+                player_status.play = false;
             }
         } else if(this.type == "html5") {
-            stats.play = !this.player.paused;
+            player_status.play = !this.player.paused;
         }
-        stats.type = this.type;
-        stats.title = document.getElementById("eow-title").title;
-        return stats;
+        player_status.type = this.type;
+        player_status.title = document.getElementById("eow-title").title;
+        return player_status;
     }
 
     return this;

@@ -76,7 +76,9 @@ label{
   width: 100%;
   list-style: none;
 }
-
+#thumbnails_list li figure img{
+	height: 90px;
+}
 #thumbnails_list li, #thumbnails_list li figure{
   padding: 0px 1px;
   border: 2px solid rgba(255, 255, 255, 0.00);
