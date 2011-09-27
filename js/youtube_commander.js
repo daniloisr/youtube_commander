@@ -50,7 +50,7 @@ var YoutubeCommander = (function(){
       };
 
       this.addVideoToList = function (youtube_tab){
-         var video_title = youtube_tab.title.match(/youtube\ -\ (.*)/i)[1];
+         var video_title = youtube_tab.title.match(/(.*)\ -\ youtube/i)[1];
          var video_id = youtube_tab.url.match(/v=([^&]*)/)[1];
 
          thumbnail = new Image();
